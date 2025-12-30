@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional: Custom styles for the scrollbar or body */
+@layer base {
+  body {
+    @apply antialiased;
+  }
+}
