@@ -10,7 +10,6 @@ const products = [
   { name: 'Battery and Fuel Cell Test Systems', slug: 'battery-fuel-cell-test-systems' },
   { name: 'Electrolyzers', slug: 'electrolyzers' },
   { name: 'Electrolyzer Test Stations', slug: 'electrolyzer-test-stations' },
-  { name: 'Electrochemistry', slug: 'electrochemistry' },
   { name: 'Raman Spectroscopy', slug: 'raman-spectroscopy' },
   { name: 'Lab Furniture', slug: 'lab-furniture' },
 ];
@@ -34,6 +33,12 @@ export default function Header() {
     { name: 'Contact Us', href: createPageUrl('ContactUs') },
   ];
 
+  const handleLinkClick = () => {
+    window.scrollTo(0, 0);
+    setMobileMenuOpen(false);
+    setProductsOpen(false);
+  };
+
   return (
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -48,7 +53,11 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to={createPageUrl('Home')} className="flex items-center gap-3 group">
+          <Link 
+            to={createPageUrl('Home')} 
+            className="flex items-center gap-3 group"
+            onClick={() => window.scrollTo(0, 0)}
+          >
             <motion.div
               className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-[#d09b2c] to-[#9391c7] flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow"
               whileHover={{ scale: 1.05 }}
@@ -90,6 +99,7 @@ export default function Header() {
                 ) : (
                   <Link
                     to={item.href}
+                    onClick={() => window.scrollTo(0, 0)}
                     className={`px-4 py-2 rounded-lg font-medium transition-all ${
                       isScrolled 
                         ? 'text-[#002a4b] hover:bg-[#002a4b]/5' 
@@ -113,12 +123,16 @@ export default function Header() {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 10 }}
-                          className="bg-white rounded-xl shadow-xl border border-gray-100 py-2 min-w-[280px] overflow-hidden" // Increased min-width slightly for longer names
+                          className="bg-white rounded-xl shadow-xl border border-gray-100 py-2 min-w-[280px] overflow-hidden" 
                         >
                           {products.map((product, idx) => (
                             <Link
                               key={product.slug}
                               to={createPageUrl('ProductDetail') + `?product=${product.slug}`}
+                              onClick={() => {
+                                window.scrollTo(0, 0);
+                                setProductsOpen(false);
+                              }}
                               className="block px-4 py-2.5 text-[#002a4b] hover:bg-[#002a4b]/5 hover:text-[#d09b2c] transition-colors"
                             >
                               <motion.span
@@ -192,7 +206,7 @@ export default function Header() {
                                 key={product.slug}
                                 to={createPageUrl('ProductDetail') + `?product=${product.slug}`}
                                 className="block px-4 py-2.5 text-[#002a4b]/70 hover:text-[#d09b2c]"
-                                onClick={() => setMobileMenuOpen(false)}
+                                onClick={handleLinkClick}
                               >
                                 {product.name}
                               </Link>
@@ -205,7 +219,7 @@ export default function Header() {
                     <Link
                       to={item.href}
                       className="block px-4 py-3 rounded-lg text-[#002a4b] font-medium hover:bg-[#002a4b]/5"
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={handleLinkClick}
                     >
                       {item.name}
                     </Link>

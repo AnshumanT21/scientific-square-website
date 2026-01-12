@@ -20,6 +20,28 @@ export default function ContactUs() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // --- UPDATED EMAIL LOGIC ---
+    // 1. Construct the mock email body
+    const emailBody = `Dear Scientific Square Team,
+
+I am ${formData.name}.
+
+${formData.message}
+
+--------------------------------
+Contact Details provided:
+Email: ${formData.email}
+Phone: ${formData.phone}`;
+
+    // 2. Encode components for URL safety
+    const subject = encodeURIComponent(formData.subject);
+    const body = encodeURIComponent(emailBody);
+    
+    // 3. Trigger the mailto link in a new tab/window
+    window.open(`mailto:info@scientificsquare.in?subject=${subject}&body=${body}`, '_blank');
+    // --- END UPDATED LOGIC ---
+
     setFormSubmitted(true);
     // Reset form after 3 seconds
     setTimeout(() => {
@@ -44,13 +66,13 @@ export default function ContactUs() {
       title: 'Call Us',
       primary: '+91 9958797197',
       secondary: '+91 1234567890'
-    },*/
+    },
     {
       icon: MapPin,
       title: 'Visit Us',
       primary: '123 Science Park Road',
       secondary: 'New Delhi, India 110001'
-    },
+    },*/
     {
       icon: Clock,
       title: 'Working Hours',
@@ -143,8 +165,8 @@ export default function ContactUs() {
                     <div className="w-20 h-20 mx-auto rounded-full bg-green-100 flex items-center justify-center mb-6">
                       <CheckCircle className="w-10 h-10 text-green-600" />
                     </div>
-                    <h3 className="text-2xl font-bold text-[#002a4b] mb-2">Thank You!</h3>
-                    <p className="text-gray-600">We've received your message and will get back to you soon.</p>
+                    <h3 className="text-2xl font-bold text-[#002a4b] mb-2">Redirecting...</h3>
+                    <p className="text-gray-600">Opening your email client to send the message.</p>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6 relative z-10">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Facebook, Linkedin, MessageCircle, Mail, Phone, ArrowUp } from 'lucide-react';
+import { Mail, Phone, ArrowUp } from 'lucide-react';
 import { createPageUrl } from '../../utils';
 
 export default function Footer() {
@@ -24,12 +24,6 @@ export default function Footer() {
     { name: 'Contact', href: createPageUrl('ContactUs') },
   ];
 
-  const socialLinks = [
-    { icon: Facebook, href: '#', label: 'Facebook' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn' },
-    { icon: MessageCircle, href: '#', label: 'WhatsApp' },
-  ];
-
   return (
     <footer className="bg-[#002a4b] text-white relative overflow-hidden">
       {/* Decorative Elements */}
@@ -43,7 +37,6 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#d09b2c] to-[#9391c7] flex items-center justify-center">
                 <div className="w-10 h-10 rounded-md bg-[#002a4b] flex items-center justify-center overflow-hidden">
-                  {/* 2. Replaced text with Image */}
                   <img 
                     src="/ScientificSquareLogo.jpeg" 
                     alt="S² Logo" 
@@ -56,24 +49,12 @@ export default function Footer() {
                 <p className="text-xs text-[#9391c7]">Precision & Innovation</p>
               </div>
             </div>
+            
             <p className="text-white/70 mb-6 leading-relaxed">
-              Leading provider of premium scientific lab equipment. 
-              Trusted by researchers and laboratories worldwide for quality and precision.
+              Your dedicated partner for advanced scientific instrumentation. 
+              We bridge the gap between global innovation and local application, 
+              delivering world-class precision to laboratories and research facilities.
             </p>
-            <div className="flex gap-3">
-              {socialLinks.map((social) => (
-                <motion.a
-                  key={social.label}
-                  href={social.href}
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 rounded-lg bg-white/10 hover:bg-[#d09b2c] flex items-center justify-center transition-colors"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-5 h-5" />
-                </motion.a>
-              ))}
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -87,6 +68,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link
                     to={link.href}
+                    onClick={() => window.scrollTo(0, 0)} // Added scroll to top
                     className="text-white/70 hover:text-[#d09b2c] transition-colors inline-flex items-center gap-2 group"
                   >
                     <span className="w-0 group-hover:w-2 h-0.5 bg-[#d09b2c] transition-all" />
@@ -106,7 +88,7 @@ export default function Footer() {
             <ul className="space-y-4">
               <li>
                 <a
-                  href="mailto:info@scientificsquare.com"
+                  href="mailto:info@scientificsquare.in"
                   className="flex items-center gap-3 text-white/70 hover:text-[#d09b2c] transition-colors group"
                 >
                   <div className="w-10 h-10 rounded-lg bg-white/5 group-hover:bg-[#d09b2c]/20 flex items-center justify-center transition-colors">
@@ -120,10 +102,11 @@ export default function Footer() {
                   href="tel:+919876543210"
                   className="flex items-center gap-3 text-white/70 hover:text-[#d09b2c] transition-colors group"
                 >
+                  {/* Uncomment when phone number is ready
                   <div className="w-10 h-10 rounded-lg bg-white/5 group-hover:bg-[#d09b2c]/20 flex items-center justify-center transition-colors">
                     <Phone className="w-5 h-5" />
                   </div>
-                  <span>+91 9958797197</span>
+                  <span>+91 9958797197</span> */}
                 </a>
               </li>
             </ul>

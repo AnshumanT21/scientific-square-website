@@ -63,7 +63,8 @@ export default function HeroSection() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#002a4b]/5 text-[#002a4b] text-sm font-medium mb-6"
             >
               <span className="w-2 h-2 rounded-full bg-[#d09b2c] animate-pulse" />
-              Trusted by 500+ Laboratories
+              {/* CHANGED: From "Trusted by 500+ Labs" to something authoritative but true */}
+              Authorized & Exclusive Distributor
             </motion.div>
 
             <motion.h1
@@ -123,10 +124,11 @@ export default function HeroSection() {
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
             >
+              {/* UPDATED STATS TO BE FACTUAL FOR A STARTUP */}
               {[
-                { value: 500, suffix: '+', label: 'Clients' },
-                { value: 30, suffix: '+', label: 'Years Experience' },
-                { value: 1000, suffix: '+', label: 'Products' }
+                { value: 30, suffix: '+', label: 'Years Experience' }, // Founder's experience
+                { value: 7, suffix: '+', label: 'Global Partners' },   // Berrytec, JINSP, Leancat, Kolibrik, etc.
+                { value: 100, suffix: '%', label: 'Application Support' } // Commitment to quality service
               ].map((stat, idx) => (
                 <div key={idx}>
                   <p className="text-2xl sm:text-3xl font-bold text-[#d09b2c]">

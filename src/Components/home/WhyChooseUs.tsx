@@ -27,7 +27,7 @@ const features = [
 ];
 
 const carouselImages = [
-  'https://images.unsplash.com/photo-1581093458791-9d58246e8c4b?w=600&q=80',
+  'https://static.vecteezy.com/system/resources/thumbnails/039/302/250/small/ai-generated-back-to-school-science-lab-excitement-highlight-the-excitement-of-a-science-experiment-in-a-laboratory-setting-background-image-generative-ai-photo.jpg',
   'https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=600&q=80',
   'https://images.unsplash.com/photo-1581093588401-fbb62a02f120?w=600&q=80'
 ];

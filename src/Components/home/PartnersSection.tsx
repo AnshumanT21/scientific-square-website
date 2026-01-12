@@ -1,6 +1,13 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Quote } from 'lucide-react';
+import { 
+  FlaskConical, 
+  Zap, 
+  GraduationCap, 
+  Atom, 
+  Factory, 
+  Droplets 
+} from 'lucide-react';
 
 // Updated partners array with image paths
 const partners = [
@@ -13,24 +20,49 @@ const partners = [
   { name: 'Bluesen', logo: '/Bluesen.png' },
 ];
 
-const testimonials = [
+// New "Industries" data instead of Testimonials
+const industries = [
   {
-    quote: "Scientific Square has been our trusted partner for over 15 years. Their commitment to quality and exceptional service has made them indispensable to our research operations.",
-    author: "Dr. Sarah Mitchell",
-    role: "Director, National Research Laboratory",
-    avatar: "SM"
+    icon: FlaskConical,
+    title: "Pharmaceuticals",
+    desc: "Ensuring compliance and purity with advanced TOC analysis and water systems.",
+    color: "text-blue-600",
+    bg: "bg-blue-50"
   },
   {
-    quote: "The precision and reliability of equipment from Scientific Square has significantly improved our testing capabilities. Their technical support is unmatched in the industry.",
-    author: "Prof. James Chen",
-    role: "Head of Biochemistry, Stanford University",
-    avatar: "JC"
+    icon: Zap,
+    title: "Green Energy",
+    desc: "Supporting the hydrogen revolution with electrolyzer testing stations.",
+    color: "text-green-600",
+    bg: "bg-green-50"
   },
   {
-    quote: "Partnering with Scientific Square was one of the best decisions for our hospital laboratory. They understand healthcare needs and deliver solutions that exceed expectations.",
-    author: "Dr. Priya Sharma",
-    role: "Chief Pathologist, Apollo Hospitals",
-    avatar: "PS"
+    icon: GraduationCap,
+    title: "Academic Research",
+    desc: "Empowering universities with precision spectroscopy and electrochemical tools.",
+    color: "text-amber-600",
+    bg: "bg-amber-50"
+  },
+  {
+    icon: Atom,
+    title: "Material Science",
+    desc: "High-resolution Raman spectroscopy for advanced material characterization.",
+    color: "text-purple-600",
+    bg: "bg-purple-50"
+  },
+  {
+    icon: Factory,
+    title: "Industrial QA/QC",
+    desc: "Robust instruments designed for rigorous quality control environments.",
+    color: "text-slate-600",
+    bg: "bg-slate-50"
+  },
+  {
+    icon: Droplets,
+    title: "Environmental",
+    desc: "Precise water quality analysis for sustainable environmental monitoring.",
+    color: "text-cyan-600",
+    bg: "bg-cyan-50"
   }
 ];
 
@@ -48,15 +80,18 @@ export default function PartnersSection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <span className="text-[#d09b2c] font-semibold tracking-wider uppercase text-sm">Our Partners</span>
+          <span className="text-[#d09b2c] font-semibold tracking-wider uppercase text-sm">Global Network</span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#002a4b] mt-3">
-            Our Proud Partners
+            Our Strategic Partners
           </h2>
+          <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
+            Collaborating with world-class manufacturers to bring cutting-edge technology to your laboratory.
+          </p>
         </motion.div>
 
         {/* Partner Marquee */}
         <motion.div
-          className="mb-20 relative"
+          className="mb-24 relative"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -78,7 +113,7 @@ export default function PartnersSection() {
                   className="flex-shrink-0 w-40 h-24 bg-gray-50 rounded-xl flex items-center justify-center border border-gray-100 hover:border-[#d09b2c]/30 hover:shadow-lg transition-all group"
                 >
                   <div className="text-center w-full px-4">
-                    {/* UPDATED: Image Container */}
+                    {/* Image Container */}
                     <div className="w-full h-12 flex items-center justify-center mb-2">
                       <img 
                         src={partner.logo} 
@@ -86,8 +121,6 @@ export default function PartnersSection() {
                         className="w-full h-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
                       />
                     </div>
-                    {/* Optional: You can remove the name below if the logo is clear enough */}
-                    <p className="text-xs text-gray-600 font-medium opacity-0 group-hover:opacity-100 transition-opacity">{partner.name}</p>
                   </div>
                 </div>
               ))}
@@ -95,44 +128,40 @@ export default function PartnersSection() {
           </div>
         </motion.div>
 
-        {/* Testimonials */}
+        {/* Industries Section (Replaces Testimonials) */}
         <motion.div
-          className="grid md:grid-cols-3 gap-8"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          {testimonials.map((testimonial, idx) => (
-            <motion.div
-              key={idx}
-              className="relative bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-all duration-300"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.5 + idx * 0.1 }}
-              whileHover={{ y: -5 }}
-            >
-              {/* Quote Icon */}
-              <div className="absolute -top-4 left-8">
-                <div className="w-8 h-8 rounded-lg bg-[#d09b2c] flex items-center justify-center shadow-lg">
-                  <Quote className="w-4 h-4 text-white" />
-                </div>
-              </div>
+          <div className="text-center mb-12">
+            <h3 className="text-2xl font-bold text-[#002a4b]">Industries We Empower</h3>
+            <div className="w-16 h-1 bg-[#d09b2c] mx-auto mt-4 rounded-full" />
+          </div>
 
-              <p className="text-gray-600 leading-relaxed mb-6 mt-4">
-                "{testimonial.quote}"
-              </p>
-
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#002a4b] flex items-center justify-center">
-                  <span className="text-white font-bold">{testimonial.avatar}</span>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {industries.map((industry, idx) => (
+              <motion.div
+                key={idx}
+                className="group relative bg-white p-8 rounded-2xl border border-gray-100 hover:border-[#d09b2c]/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.5 + idx * 0.1 }}
+              >
+                <div className={`w-14 h-14 rounded-xl ${industry.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <industry.icon className={`w-7 h-7 ${industry.color}`} />
                 </div>
-                <div>
-                  <p className="font-semibold text-[#002a4b]">{testimonial.author}</p>
-                  <p className="text-sm text-[#9391c7]">{testimonial.role}</p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+                
+                <h4 className="text-xl font-bold text-[#002a4b] mb-3 group-hover:text-[#d09b2c] transition-colors">
+                  {industry.title}
+                </h4>
+                
+                <p className="text-gray-600 leading-relaxed text-sm">
+                  {industry.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>

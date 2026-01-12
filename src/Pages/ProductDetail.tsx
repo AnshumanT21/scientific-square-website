@@ -9,7 +9,7 @@ import {
   Cpu,
   CheckCircle,
   ArrowRight,
-  ExternalLink // Imported icon for the new button
+  ExternalLink 
 } from 'lucide-react';
 import { Button } from '../Components/ui/button';
 import { Link, useLocation } from 'react-router-dom';
@@ -22,27 +22,39 @@ interface ProductFeature {
   desc: string;
 }
 
+// New interface for Variants (PTS-1, PTS-10, etc.)
+interface ProductVariant {
+  id: string;
+  name: string; // The button label (e.g., "PTS-1")
+  description: string;
+  image: string;
+  productUrl: string;
+}
+
 interface Product {
   name: string;
   tagline: string;
   description: string;
   image: string;
   partner: string;
-  productUrl?: string; // NEW: Field for external partner link
+  partnerLogo?: string;
+  productUrl?: string;
   features: ProductFeature[];
   specs: string[];
+  variants?: ProductVariant[]; // Added variants array
 }
 
 // --- Data: Categories containing Arrays of Products ---
 const categoriesData: Record<string, Product[]> = {
   'lab-water-purification-system': [
     {
-      name: 'Online TOC Analyzer',
+      name: 'Online TOC Analyzer BerryPURE TOC',
       tagline: 'Continuous Water Quality Monitoring',
-      description: 'Designed for real-time organic monitoring in pharmaceutical and semiconductor water systems. Ensures compliance with global pharmacopoeia standards.',
+      description: 'A precision instrument designed for the continuous monitoring of Total Organic Carbon in purified water systems. It ensures strict compliance with pharmaceutical standards such as USP <643> and EP 2.2.44 through reagent-free UV oxidation technology.',
       image: 'https://images.squarespace-cdn.com/content/v1/5c76c9137fdcb8facd7603f4/d66d51a1-4f8d-4773-8a5c-182d03550dec/TOC.png',
       partner: 'Berrytec',
-      productUrl: 'https://www.berrytec.net/en/berrypure-toc', // Example URL
+      partnerLogo: '/Berrytec.png', 
+      productUrl: 'https://www.berrytec.net/en/berrypure-toc',
       features: [
         { icon: Gauge, title: 'Real-time Analysis', desc: 'Instant TOC readings' },
         { icon: Shield, title: 'Compliance Ready', desc: 'USP <643> and EP 2.2.44 compliant' },
@@ -51,11 +63,87 @@ const categoriesData: Record<string, Product[]> = {
       specs: ['Range: 0.5 to 1000 ppb', 'Response Time: < 1 min', 'Touchscreen Interface']
     },
     {
+      name: 'BerryPURE mini',
+      tagline: 'Compact Lab Water Solution',
+      description: 'Engineered for laboratories with limited bench space, the BerryPURE mini delivers consistent Type I and Type II water quality. It is an optimal choice for general chemistry, buffer preparation, and glassware rinsing applications.',
+      image: 'https://images.squarespace-cdn.com/content/v1/5c76c9137fdcb8facd7603f4/9deb3416-b768-405a-8b5f-ede41c3c0261/Ultra+Pure+Water+Type+1+Berrypure+Mini+Series.jpg',
+      partner: 'Berrytec',
+      partnerLogo: '/Berrytec.png',
+      productUrl: 'https://www.berrytec.net/en/purewater',
+      features: [
+        { icon: Settings, title: 'Space Saving', desc: 'Ultra-compact design for tight spaces' },
+        { icon: Zap, title: 'Efficient', desc: 'Low energy consumption' },
+        { icon: Shield, title: 'Reliable', desc: 'Consistent water quality' }
+      ],
+      specs: ['Output: 5L/hr', 'Conductivity: < 0.1 µS/cm', 'Dimensions: Compact Footprint']
+    },
+    {
+      name: 'BerryPURE RO + EDI',
+      tagline: 'Advanced Purification Technology',
+      description: 'This system combines Reverse Osmosis with Electro-Deionization (EDI) to produce superior grade water without the need for chemical regeneration. It is designed to minimize wastewater while maintaining high resistivity levels.',
+      image: 'https://images.squarespace-cdn.com/content/v1/5c76c9137fdcb8facd7603f4/1567580253099-9UFFK0Q9PLD37NJHE812/RO.png',
+      partner: 'Berrytec',
+      partnerLogo: '/Berrytec.png',
+      productUrl: 'https://www.berrytec.net/en/ro-class-edi',
+      features: [
+        { icon: Gauge, title: 'High Purity', desc: 'Consistent Type II water' },
+        { icon: Zap, title: 'Eco-Friendly', desc: 'Low wastewater recovery' },
+        { icon: Cpu, title: 'Automated', desc: 'Fully automatic operation' }
+      ],
+      specs: ['Tech: RO + EDI', 'Resistivity: > 5 MΩ-cm', 'TOC: < 30 ppb']
+    },
+    {
+      name: 'BerryPURE ULTRA',
+      tagline: 'Ultrapure Water System',
+      description: 'The BerryPURE ULTRA is built for the most critical laboratory applications, including HPLC, GC-MS, and molecular biology. It utilizes dual-wavelength UV oxidation to ensure virtually zero organic contaminants.',
+      image: 'https://images.squarespace-cdn.com/content/v1/5c76c9137fdcb8facd7603f4/1551781291255-T5DAZF4WPLHSBDXWNTN1/sgkUltra',
+      partner: 'Berrytec',
+      partnerLogo: '/Berrytec.png',
+      productUrl: 'https://www.berrytec.net/en/sgkultra',
+      features: [
+        { icon: Shield, title: 'Critical Grade', desc: 'For analytical applications' },
+        { icon: Thermometer, title: 'UV Oxidation', desc: 'Dual wavelength UV lamp' },
+        { icon: Gauge, title: 'Monitoring', desc: 'Real-time TOC monitoring' }
+      ],
+      specs: ['Type: Ultrapure Type I', 'Resistivity: 18.2 MΩ-cm', 'TOC: < 5 ppb']
+    },
+    {
+      name: 'BerryPURE Tower',
+      tagline: 'High Volume Production',
+      description: 'A robust floor-standing unit designed to meet the demands of facilities with high daily water consumption. It can serve as a central supply unit feeding multiple laboratory points or washing machines.',
+      image: 'https://images.squarespace-cdn.com/content/v1/5c76c9137fdcb8facd7603f4/1567579009015-UPUAHFDXNDPPUTYO3CLV/Berrypure%C2%AE+Tower',
+      partner: 'Berrytec',
+      partnerLogo: '/Berrytec.png',
+      productUrl: 'https://www.berrytec.net/en/sutower',
+      features: [
+        { icon: Zap, title: 'High Capacity', desc: 'High flow rates available' },
+        { icon: Settings, title: 'Robust', desc: 'Heavy-duty construction' },
+        { icon: Cpu, title: 'Centralized', desc: 'Can feed multiple points' }
+      ],
+      specs: ['Output: Up to 100L/hr', 'Tank: Integrated or External', 'Mounting: Floor']
+    },
+    {
+      name: 'BerryPURE COMPACT',
+      tagline: 'All-in-One Benchtop Unit',
+      description: 'A versatile all-in-one system that connects directly to a tap water source to produce both Type I and Type II water. Features an intuitive digital interface for easy volumetric dispensing.',
+      image: 'https://images.squarespace-cdn.com/content/v1/5c76c9137fdcb8facd7603f4/882f270b-9dfc-4e43-ba1b-8baa65bb93b8/compact.png',
+      partner: 'Berrytec',
+      partnerLogo: '/Berrytec.png',
+      productUrl: 'https://www.berrytec.net/en/compact',
+      features: [
+        { icon: Settings, title: 'Dual Output', desc: 'Type I and Type II water' },
+        { icon: Gauge, title: 'User Friendly', desc: 'Intuitive digital display' },
+        { icon: Shield, title: 'Easy Maintenance', desc: 'Quick cartridge change' }
+      ],
+      specs: ['Feed: Potable Tap Water', 'Resistivity: 18.2 MΩ-cm', 'Dispensing: Manual/Volumetric']
+    },
+    {
       name: 'Water Quality Analyzer',
       tagline: 'Comprehensive Multiparameter Testing',
-      description: 'A versatile unit capable of measuring pH, Conductivity, and TOC simultaneously. The ultimate all-in-one solution for lab water diagnostics.',
+      description: 'This multiparameter analyzer offers simultaneous measurement of pH, conductivity, and TOC. Its robust IP54 enclosure makes it suitable for demanding lab environments where rapid diagnostics are required.',
       image: 'https://www.bluesen.com/en/images/sub/product/img_aqua2000_5x.png',
       partner: 'Bluesen',
+      partnerLogo: '/Bluesen.png', // Fixed filename
       productUrl: 'https://www.bluesen.com/en/product/product1.asp',
       features: [
         { icon: Gauge, title: 'Multiparameter', desc: 'pH, Conductivity, TOC in one' },
@@ -63,15 +151,16 @@ const categoriesData: Record<string, Product[]> = {
         { icon: Zap, title: 'Rapid Results', desc: 'Full profile in under 3 mins' }
       ],
       specs: ['pH Range: 0-14', 'Conductivity: 0.055 µS/cm', 'Power: 110/220V']
-    }
+    },
   ],
   'raman-spectroscopy': [
     {
       name: 'Online Raman Analyzer',
       tagline: 'Process Analytical Technology',
-      description: 'Ideal for bioprocessing and reaction monitoring. Provides non-destructive chemical analysis directly in the production line.',
+      description: 'A multi-channel system engineered for in-situ process monitoring. It enables real-time chemical composition analysis in bioprocessing and pharmaceutical production lines without interrupting the workflow.',
       image: 'https://www.jinsptech.com/uploads/RS2000-4RS2100-4.png',
       partner: 'JINSP',
+      partnerLogo: '/JINSP.png',
       productUrl: 'https://www.jinsptech.com/multi-channel-online-raman-analyzer-for-liquids/',
       features: [
         { icon: Zap, title: 'Real-time Kinetics', desc: 'Track reactions as they happen' },
@@ -83,9 +172,10 @@ const categoriesData: Record<string, Product[]> = {
     {
       name: 'Hand Held Raman Spectrometer',
       tagline: 'Portable Material Identification',
-      description: 'Bring the lab to the sample. Rugged, lightweight, and fast—perfect for incoming raw material verification and field testing.',
+      description: 'This rugged, lightweight device brings laboratory-grade spectroscopy to the field. It is specifically designed for the rapid identification of raw materials, narcotics, and explosives with immediate pass/fail results.',
       image: 'https://www.jinsptech.com/uploads/products-1.jpg',
       partner: 'JINSP',
+      partnerLogo: '/JINSP.png',
       productUrl: 'https://www.jinsptech.com/handheld-raman-spectrometer-2/',
       features: [
         { icon: Gauge, title: 'Point & Shoot', desc: 'Results in seconds' },
@@ -97,9 +187,10 @@ const categoriesData: Record<string, Product[]> = {
     {
       name: 'Miniature Spectrometer',
       tagline: 'Compact Optical Bench',
-      description: 'High performance in a small footprint. Designed for OEM integration and educational laboratories requiring precision spectroscopy.',
+      description: 'Offering high optical resolution in a small footprint, this spectrometer is ideal for OEM integration and educational setups. It features a reliable CCD array detector ensuring thermal stability and low stray light.',
       image: 'https://cdn.globalso.com/jinsptech/products2.jpg',
       partner: 'JINSP',
+      partnerLogo: '/JINSP.png',
       productUrl: 'https://www.jinsptech.com/sr50c-sr75c-miniature-spectrometer-product/',
       features: [
         { icon: Settings, title: 'Modular Design', desc: 'Interchangeable slits' },
@@ -113,9 +204,10 @@ const categoriesData: Record<string, Product[]> = {
     {
       name: 'Fume Hood',
       tagline: 'Operator Safety Priority',
-      description: 'State-of-the-art chemical fume hoods designed to protect laboratory personnel from toxic vapors, gases, and dusts.',
+      description: 'High-performance containment systems designed to protect laboratory personnel from hazardous fumes and vapors. Features advanced aerodynamics and digital airflow monitoring to ensure strict safety compliance.',
       image: 'https://images.squarespace-cdn.com/content/v1/5806092420099efa03a2080c/c30531b6-68d4-47f2-8bb5-fe7dadff0dbe/stellaair25_D.jpeg',
       partner: '4 more Labor',
+      partnerLogo: '/4more.png',
       productUrl: 'https://www.4morelabor.com/en/filter-fume-cupboard',
       features: [
         { icon: Shield, title: 'Airflow Monitor', desc: 'Digital face velocity display' },
@@ -127,10 +219,11 @@ const categoriesData: Record<string, Product[]> = {
     {
       name: 'Lab Furniture',
       tagline: 'Ergonomic Workspace Solutions',
-      description: 'Modular, durable, and chemical-resistant workbenches and storage cabinets tailored to modern laboratory workflows.',
-      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80',
-      partner: 'Godrej Interio',
-      productUrl: '#',
+      description: 'A modular furniture system featuring heavy-duty steel frames and chemical-resistant surfaces. Designed for flexibility, allowing laboratories to reconfigure layouts as research needs evolve.',
+      image: 'https://www.lumbersteel.com.my/images/blog/Lumbersteel.jpg#joomlaImage://local-images/blog/Lumbersteel.jpg?width=900&height=560',
+      partner: '4 more Labor',
+      partnerLogo: '/4more.png',
+      productUrl: 'https://www.4morelabor.com/en/home',
       features: [
         { icon: Gauge, title: 'Load Bearing', desc: 'Heavy duty steel frames' },
         { icon: Shield, title: 'Chemical Resistant', desc: 'Epoxy powder coating' },
@@ -143,9 +236,10 @@ const categoriesData: Record<string, Product[]> = {
     {
       name: 'Water Electrolyzers',
       tagline: 'Green Hydrogen Production',
-      description: 'PEM and Alkaline electrolysis systems for efficient on-site hydrogen generation.',
+      description: 'Advanced electrolysis systems utilizing PEM and Alkaline technologies to facilitate efficient, on-site green hydrogen generation for both industrial and research applications.',
       image: 'https://leancatwe.com/wp-content/uploads/2024/05/hex_2.png',
       partner: 'Leancat Electrolyzers',
+      partnerLogo: '/LeancatElectro.png',
       productUrl: 'https://leancatwe.com/water-electrolyzers/',
       features: [
         { icon: Zap, title: 'High Efficiency', desc: 'Optimized stack design' },
@@ -157,9 +251,10 @@ const categoriesData: Record<string, Product[]> = {
     {
       name: 'Hydrogen Generators',
       tagline: 'Industrial Scale Solutions',
-      description: 'Large scale electrolysis stacks designed for industrial hydrogen applications and energy storage.',
+      description: 'Scalable hydrogen production units designed for high-capacity industrial needs and renewable energy storage. Capable of continuous operation with advanced thermal management systems.',
       image: 'https://leancatwe.com/wp-content/uploads/2025/03/rack_new-1024x1024.png',
       partner: 'Leancat Electrolyzers',
+      partnerLogo: '/LeancatElectro.png',
       productUrl: 'https://leancatwe.com/hydrogen-generators/',
       features: [
         { icon: Gauge, title: 'Scalable', desc: 'MW scale capability' },
@@ -171,9 +266,10 @@ const categoriesData: Record<string, Product[]> = {
     {
       name: 'Multi Cell Testing Hardware',
       tagline: 'R&D Stack Testing',
-      description: 'Precision hardware for testing multiple electrolyzer cells simultaneously under varying conditions.',
+      description: 'Specialized testing hardware that allows researchers to evaluate multiple electrolysis cells simultaneously. Supports a wide range of operating conditions including high pressure and variable temperatures.',
       image: 'https://leancatwe.com/wp-content/uploads/2024/07/les_slozeny_new-e1722330282797.png',
       partner: 'Leancat Electrolyzers',
+      partnerLogo: '/LeancatElectro.png',
       productUrl: 'https://leancatwe.com/laboratory-electrolyzer-stack/',
       features: [
         { icon: Settings, title: 'Versatile', desc: 'Compatible with PEM/AEM' },
@@ -187,10 +283,43 @@ const categoriesData: Record<string, Product[]> = {
     {
       name: 'Fuel Cell Stations',
       tagline: 'Comprehensive Stack Analysis',
-      description: 'Complete test stations for characterization of PEM and SOFC fuel cells.',
+      // Base description (will be overridden by variants if selected)
+      description: 'Fully automated test stations for the characterization of PEM and SOFC fuel cells. Includes regenerative electronic loads and precise humidity control for accurate performance curves.',
       image: 'https://lean-cat.com/wp-content/uploads/2022/03/P1180271_transparent1-2-1229x1536.png',
       partner: 'LEANCAT',
+      partnerLogo: '/LEANCAT.png',
       productUrl: 'https://lean-cat.com/fuel-cell-test-station-pts-500/',
+      // ADDED VARIANTS HERE
+      variants: [
+        {
+          id: 'pts-1',
+          name: 'PTS-1',
+          description: 'The PTS-1 is a precision test station designed for low-power fuel cell research, ideal for single cell testing up to 1kW. It features high-resolution load banks and precise gas mixing capabilities for fundamental characterization.',
+          image: 'https://www.msesupplies.com/cdn/shop/files/Pic7_1024x1024.png?v=1722893070',
+          productUrl: 'https://lean-cat.com/fuel-cell-test-station-pts-1/' // Assumed URL structure, update if specific
+        },
+        {
+          id: 'pts-10',
+          name: 'PTS-10',
+          description: 'Designed for short-stack evaluation, the PTS-10 handles power ranges up to 10kW. This station integrates advanced thermal management and back-pressure control, making it suitable for automotive and stationary stack development.',
+          image: 'https://lean-cat.com/wp-content/uploads/2024/06/7.png',
+          productUrl: 'https://lean-cat.com/fuel-cell-test-station-pts-10/' 
+        },
+        {
+          id: 'pts-100',
+          name: 'PTS-100',
+          description: 'A high-power test station built for full-size automotive stacks up to 100kW. The PTS-100 offers regenerative load capabilities to feed energy back to the grid, ensuring energy-efficient testing operations.',
+          image: 'https://lean-cat.com/wp-content/uploads/2022/03/P1180271_transparent1-2-1229x1536.png',
+          productUrl: 'https://lean-cat.com/fuel-cell-test-station-pts-100/' 
+        },
+        {
+          id: 'pts-500',
+          name: 'PTS-500',
+          description: 'An industrial-grade testing solution for heavy-duty applications up to 500kW. The PTS-500 is engineered for endurance testing of large-scale fuel cell systems used in maritime, rail, and heavy trucking sectors.',
+          image: 'https://lean-cat.com/wp-content/uploads/2024/06/9.png',
+          productUrl: 'https://lean-cat.com/fuel-cell-test-station-pts-500/' 
+        }
+      ],
       features: [
         { icon: Zap, title: 'Load Banking', desc: 'Regenerative electronic loads' },
         { icon: Thermometer, title: 'Humidity Control', desc: 'Precise dew point control' },
@@ -201,9 +330,10 @@ const categoriesData: Record<string, Product[]> = {
     {
       name: 'Water Electrolyzer Test Station',
       tagline: 'Electrolysis Performance Testing',
-      description: 'Dedicated stations for evaluating performance and durability of water electrolysis cells and stacks.',
+      description: 'Dedicated stations designed to assess the efficiency and durability of water electrolysis stacks. Features automated back-pressure control and in-line safety gas analysis.',
       image: 'https://lean-cat.com/wp-content/uploads/2024/06/3.png',
       partner: 'LEANCAT',
+      partnerLogo: '/LEANCAT.png',
       productUrl: 'https://lean-cat.com/water-electrolyzer-test-station-ets-1/',
       features: [
         { icon: Gauge, title: 'Pressure Control', desc: 'Automated back pressure' },
@@ -217,9 +347,10 @@ const categoriesData: Record<string, Product[]> = {
     {
       name: 'High Power Multichannel EIS',
       tagline: 'Impedance Spectroscopy',
-      description: 'Simultaneous EIS measurements on multiple channels for high-throughput battery testing.',
+      description: 'A high-throughput system capable of performing Electrochemical Impedance Spectroscopy (EIS) on multiple channels simultaneously. Essential for grading batteries and analyzing stack homogeneity.',
       image: 'https://www.kolibrik.net/storage/app/media/news/evm128-forntrear.jpg',
       partner: 'Kolibrik',
+      partnerLogo: '/Kolibrik2.avif', 
       productUrl: 'https://www.kolibrik.net/en/solutions/megaeis-system-for-batteries',
       features: [
         { icon: Zap, title: 'Multi-channel', desc: 'Up to 32 parallel channels' },
@@ -229,25 +360,12 @@ const categoriesData: Record<string, Product[]> = {
       specs: ['Channels: 8/16/32', 'Frequency: 10µHz - 1MHz', 'Current: 5A/channel']
     },
     {
-      name: 'Potentiostats',
-      tagline: 'Electrochemical Research',
-      description: 'Research grade potentiostat/galvanostat for fundamental electrochemical studies.',
-      image: 'https://images.unsplash.com/photo-1581093458791-9d58246e8c4b?w=800&q=80',
-      partner: 'Metrohm Autolab',
-      productUrl: '#',
-      features: [
-        { icon: Settings, title: 'Modular', desc: 'Add-on modules available' },
-        { icon: Shield, title: 'Floating Ground', desc: 'For grounded cells' },
-        { icon: Zap, title: 'Fast Scan', desc: 'High speed CV' }
-      ],
-      specs: ['Voltage: ±10V', 'Current Range: 10nA - 1A', 'Resolution: 0.003%']
-    },
-    {
       name: 'Cell Voltage Monitoring',
       tagline: 'Stack Health Monitoring',
-      description: 'Compact and reliable CVM systems for fuel cell and battery stacks.',
+      description: 'A compact and modular CVM solution designed to monitor the individual cell voltages of fuel cell and battery stacks. Critical for preventing cell reversal and ensuring long-term stack health.',
       image: 'https://www.kolibrik.net/storage/app/media/product-images/cell-voltage-monitoring/CVM-S320H.jpg',
       partner: 'Kolibrik',
+      partnerLogo: '/Kolibrik2.avif', 
       productUrl: 'https://www.kolibrik.net/en/products/cell-voltage-monitoring/cvm-64h',
       features: [
         { icon: Zap, title: 'High Voltage', desc: 'Isolation up to 1000V' },
@@ -257,18 +375,6 @@ const categoriesData: Record<string, Product[]> = {
       specs: ['Channels: Up to 500', 'Range: ±5V per cell', 'Comms: CAN Bus']
     }
   ],
-  'electrochemistry': [
-    {
-      name: 'General Potentiostat',
-      tagline: 'Standard Lab Equipment',
-      description: 'Versatile electrochemical workstation for general applications.',
-      image: 'https://images.unsplash.com/photo-1581093458791-9d58246e8c4b?w=800&q=80',
-      partner: 'Gamry',
-      productUrl: '#',
-      features: [{icon: Zap, title: 'Reliable', desc: 'Industry standard'}],
-      specs: ['Standard config']
-    }
-  ]
 };
 
 // --- Sub-Component for Rendering a Single Product ---
@@ -277,9 +383,21 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
   const featuresRef = useRef(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
   const featuresInView = useInView(featuresRef, { once: false, margin: "-100px" });
+  
+  // State for selected variant (index)
+  const [activeVariantIdx, setActiveVariantIdx] = useState(0);
 
   // Alternate alignment based on index (even = image right, odd = image left)
   const isEven = index % 2 === 0;
+
+  // Determine which data to display based on whether variants exist
+  const hasVariants = product.variants && product.variants.length > 0;
+  
+  // If variants exist, use the active one, otherwise use the base product data
+  const currentData = hasVariants ? product.variants![activeVariantIdx] : product;
+  const displayImage = currentData.image || product.image;
+  const displayDescription = currentData.description || product.description;
+  const displayUrl = currentData.productUrl || product.productUrl;
 
   return (
     <div className="pb-20 border-b border-gray-100 last:border-0">
@@ -300,14 +418,51 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
               </h1>
               <p className="text-xl text-[#9391c7] font-medium mb-6">{product.tagline}</p>
               
-              <p className="text-gray-600 leading-relaxed mb-4">
-                {product.description}
+              <p className="text-gray-600 leading-relaxed mb-4 text-justify">
+                {displayDescription}
               </p>
 
               {/* Partner Field below description */}
               <div className="mb-8 p-4 bg-gray-50 rounded-xl border-l-4 border-[#d09b2c]">
-                <p className="text-xs font-bold text-[#d09b2c] uppercase tracking-wider mb-1">Product Partner</p>
-                <p className="text-lg font-bold text-[#002a4b]">{product.partner}</p>
+                <p className="text-xs font-bold text-[#d09b2c] uppercase tracking-wide mb-2">Product Partner</p>
+                {/* Logic: Show Logo if available, else Show Text */}
+                {product.partnerLogo ? (
+                    <div className="flex items-center gap-2">
+                         <img 
+                            src={product.partnerLogo} 
+                            alt={product.partner} 
+                            className="h-16 object-contain" // INCREASED SIZE TO h-16
+                        />
+                        {/* Specific override: Show text for 4 more Labor AFTER logo */}
+                        {product.partner === '4 more Labor' && (
+                             <span className="text-xl font-bold text-[#002a4b]">4 more Labor</span>
+                        )}
+                    </div>
+                ) : (
+                    <p className="text-lg font-bold text-[#002a4b]">{product.partner}</p>
+                )}
+
+                {/* VARIANT BUTTONS SECTION */}
+                {hasVariants && (
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <p className="text-sm font-semibold text-[#002a4b] mb-2">Select Model:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {product.variants!.map((variant, vIdx) => (
+                        <button
+                          key={variant.id}
+                          onClick={() => setActiveVariantIdx(vIdx)}
+                          className={`px-3 py-1 text-sm rounded-full transition-all border ${
+                            activeVariantIdx === vIdx
+                              ? 'bg-[#002a4b] text-white border-[#002a4b]'
+                              : 'bg-transparent text-gray-600 border-gray-300 hover:border-[#002a4b] hover:text-[#002a4b]'
+                          }`}
+                        >
+                          {variant.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Specs List */}
@@ -327,19 +482,22 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
 
               {/* Action Buttons Row */}
               <div className="flex flex-col sm:flex-row gap-4 flex-wrap">
-                <Link to={createPageUrl('ContactUs')}>
+                <Link 
+                  to={createPageUrl('ContactUs')}
+                  onClick={() => window.scrollTo(0, 0)}
+                >
                   <Button className="bg-[#002a4b] hover:bg-[#002a4b]/90 text-white px-8 py-6 text-lg rounded-xl">
                     Request Quote
                   </Button>
                 </Link>
 
-                <Button variant="outline" className="border-[#002a4b] text-[#002a4b] hover:bg-[#002a4b] hover:text-white px-8 py-6 text-lg rounded-xl">
+                {/* <Button variant="outline" className="border-[#002a4b] text-[#002a4b] hover:bg-[#002a4b] hover:text-white px-8 py-6 text-lg rounded-xl">
                   Download Brochure
-                </Button>
+                </Button> */}
 
                 {/* NEW BUTTON: Know More */}
                 <a 
-                  href={product.productUrl || '#'} 
+                  href={displayUrl || '#'} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-block"
@@ -363,7 +521,7 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
                 <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br from-[#d09b2c]/20 to-[#9391c7]/20 transform ${isEven ? 'rotate-6' : '-rotate-6'}`} />
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                   <img
-                    src={product.image}
+                    src={displayImage}
                     alt={product.name}
                     className="w-full h-full object-cover"
                   />
@@ -442,7 +600,7 @@ export default function ProductDetail() {
       {/* Category Header */}
       <div className="bg-[#002a4b] py-12 text-center text-white">
         <div className="max-w-7xl mx-auto px-4">
-          <span className="text-[#d09b2c] uppercase tracking-widest text-sm font-semibold">Category</span>
+          <span className="text-[#d09b2c] uppercase tracking-wide text-sm font-semibold">Category</span>
           <h1 className="text-3xl md:text-5xl font-bold mt-2">{getCategoryName(categorySlug)}</h1>
         </div>
       </div>
