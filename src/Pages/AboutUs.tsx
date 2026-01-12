@@ -198,7 +198,6 @@ export default function AboutUs() {
                      {/* Placeholder for Rajeev Tyagi's Image */}
                      <div className="text-center p-8">
                         <div className="w-24 h-24 rounded-full bg-[#d09b2c] mx-auto mb-4 flex items-center justify-center text-3xl font-bold text-[#002a4b]">RT</div>
-                        <p className="text-white/50 text-sm">Photo Placeholder</p>
                      </div>
                   </div>
                 </div>
