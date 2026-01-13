@@ -46,7 +46,7 @@ export default function AboutUs() {
     {
       icon: Rocket,
       title: "Future Ready",
-      desc: "Born in 2025, we are built for the modern lab—focusing on digitalization, automation, and sustainable technologies like Green Hydrogen."
+      desc: "Born in 2024, we are built for the modern lab—focusing on digitalization, automation, and sustainable technologies like Green Hydrogen."
     }
   ];
 
@@ -83,7 +83,7 @@ export default function AboutUs() {
             transition={{ type: "spring", stiffness: 200, delay: 0.5 }}
             className="inline-block py-1 px-3 rounded-full bg-white/10 border border-white/20 text-[#d09b2c] text-sm font-medium mb-6 backdrop-blur-sm"
           >
-            EST. 2025
+            EST. 2024
           </motion.span>
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tight">
             Built on Experience.<br />
@@ -121,7 +121,7 @@ export default function AboutUs() {
               
               <div className="space-y-6 text-gray-600 text-lg leading-relaxed text-justify">
                 <p>
-                  <strong className="text-[#002a4b]">ScientificSquare</strong> was founded in 2025, but its roots go much deeper. After spending over 30 years shaping the scientific equipment landscape in India, our founder, <span className="text-[#002a4b] font-semibold">Rajeev Tyagi</span>, identified a critical gap in the market.
+                  <strong className="text-[#002a4b]">ScientificSquare</strong> was founded in 2024, but its roots go much deeper. After spending over 30 years shaping the scientific equipment landscape in India, our founder, <span className="text-[#002a4b] font-semibold">Rajeev Tyagi</span>, identified a critical gap in the market.
                 </p>
                 <p>
                   The industry was flooded with products, but starved of true application support. Researchers weren't just looking for boxes; they needed partners who understood the science behind the machine.
@@ -148,9 +148,9 @@ export default function AboutUs() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#002a4b]/90 via-[#002a4b]/20 to-transparent" />
                 
                 <div className="absolute bottom-8 left-8 right-8 text-white">
-                  {/* ANIMATED COUNTER FOR 2025 */}
+                  {/* ANIMATED COUNTER FOR 2024 */}
                   <div className="text-6xl font-bold text-[#d09b2c] mb-2 flex items-center">
-                    <AnimatedCounter value={2025} isInView={storyInView} />
+                    <AnimatedCounter value={2024} isInView={storyInView} />
                   </div>
                   <div className="h-1 w-20 bg-white/30 mb-4" />
                   <p className="text-lg font-light">

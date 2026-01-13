@@ -8,7 +8,7 @@ const launchNews = {
   id: 1,
   title: 'Unveiling Scientific Square: The Future of Precision Science',
   excerpt: 'Today marks a paradigm shift in laboratory instrumentation. We are bridging the gap between theoretical potential and practical mastery.',
-  date: '2024-03-15',
+  date: '2024-07-24',
   category: 'Strategic Launch',
   image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=1200&q=80',
   readTime: '2 min read',
@@ -91,8 +91,8 @@ export default function NewsEvents() {
                 
                 {/* Date Badge */}
                 <div className="absolute bottom-6 right-6 z-20 bg-[#002a4b] px-5 py-3 rounded-xl shadow-lg border border-white/10 text-white text-center">
-                   <span className="block text-xs font-medium text-[#d09b2c] uppercase tracking-wider">March</span>
-                   <span className="block text-2xl font-bold">15</span>
+                   <span className="block text-xs font-medium text-[#d09b2c] uppercase tracking-wider">July</span>
+                   <span className="block text-2xl font-bold">24</span>
                 </div>
               </div>
 
