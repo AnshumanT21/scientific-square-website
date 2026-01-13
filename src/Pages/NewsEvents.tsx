@@ -214,7 +214,7 @@ export default function NewsEvents() {
                     <div className="flex items-center gap-4 text-sm text-gray-400">
                       <span className="flex items-center gap-1"><Calendar className="w-4 h-4"/> {formatDate(selectedNews.date)}</span>
                       <span className="w-1 h-1 bg-gray-600 rounded-full"></span>
-                      <span>Chennai, India</span>
+                      <span>Delhi, India</span>
                     </div>
                   </motion.div>
 
