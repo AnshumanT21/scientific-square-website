@@ -7,6 +7,13 @@ import { createPageUrl } from "../../utils";
 
 const products = [
   {
+    id: 'lab-water-purification-system', // Updated ID to match Category Slug
+    name: 'BerryPURE ULTRA',
+    description: 'The BerryPURE ULTRA is built for the most critical laboratory applications, including HPLC, GC-MS, and molecular biology. It utilizes dual-wavelength UV oxidation to ensure virtually zero organic contaminants.',
+    image: 'https://images.squarespace-cdn.com/content/v1/5c76c9137fdcb8facd7603f4/1551781291255-T5DAZF4WPLHSBDXWNTN1/sgkUltra',
+    partner: 'BerryPURE'
+  },
+  {
     id: 'water-quality-analyzer', // Updated ID to match Category Slug
     name: 'Water Quality Analyzer',
     description: 'A versatile unit capable of measuring pH, Conductivity, and TOC simultaneously. The ultimate all-in-one solution for lab water diagnostics.',
@@ -21,6 +28,13 @@ const products = [
     partner: 'JINSP'
   },
   {
+    id: 'electrolyzer-test-stations', // Updated ID to match Category Slug (Contains Fuel Cell Stations)
+    name: 'Fuel Cell Test Stations',
+    description: 'Complete test stations for characterization of PEM and SOFC fuel cells.',
+    image: 'https://lean-cat.com/wp-content/uploads/2022/03/P1180271_transparent1-2-1229x1536.png',
+    partner: 'LEANCAT'
+  },
+  {
     id: 'electrolyzers', // Updated ID to match Category Slug
     name: 'Hydrogen Generators',
     description: 'Large scale electrolysis stacks designed for industrial hydrogen applications and energy storage.',
@@ -28,12 +42,27 @@ const products = [
     partner: 'Leancat Electrolyzers'
   },
   {
-    id: 'electrolyzer-test-stations', // Updated ID to match Category Slug (Contains Fuel Cell Stations)
-    name: 'Fuel Cell Test Stations',
-    description: 'Complete test stations for characterization of PEM and SOFC fuel cells.',
-    image: 'https://lean-cat.com/wp-content/uploads/2022/03/P1180271_transparent1-2-1229x1536.png',
-    partner: 'LEANCAT'
-  }
+    id: 'online-toc-analyzer-berrypure-toc', // Updated ID to match Category Slug
+    name: 'Online TOC Analyzer BerryPURE TOC',
+    description: 'A precision instrument designed for the continuous monitoring of Total Organic Carbon in purified water systems. It ensures strict compliance with pharmaceutical standards such as USP <643> and EP 2.2.44 through reagent-free UV oxidation technology.',
+    image: 'https://images.squarespace-cdn.com/content/v1/5c76c9137fdcb8facd7603f4/d66d51a1-4f8d-4773-8a5c-182d03550dec/TOC.png',
+    partner: 'BerryPURE'
+  },
+  {
+    id: 'battery-fuel-cell-test-systems', // Updated ID to match Category Slug
+    name: 'Cell Voltage Monitoring',
+    description: 'A compact and modular CVM solution designed to monitor the individual cell voltages of fuel cell and battery stacks. Critical for preventing cell reversal and ensuring long-term stack health.',
+    image: 'https://www.kolibrik.net/storage/app/media/product-images/cell-voltage-monitoring/CVM-S320H.jpg',
+    partner: 'Kolibrik'
+  },
+  {
+    id: 'lab-furniture', // Updated ID to match Category Slug
+    name: 'Fume Hood',
+    description: 'High-performance containment systems designed to protect laboratory personnel from hazardous fumes and vapors. Features advanced aerodynamics and digital airflow monitoring to ensure strict safety compliance.',
+    image: 'https://images.squarespace-cdn.com/content/v1/5806092420099efa03a2080c/c30531b6-68d4-47f2-8bb5-fe7dadff0dbe/stellaair25_D.jpeg',
+    partner: '4 more Labor'
+  },
+  
 ];
 
 export default function ProductShowcase() {
@@ -53,7 +82,7 @@ export default function ProductShowcase() {
           <div>
             <span className="text-[#d09b2c] font-semibold tracking-wider uppercase text-sm">Our Products</span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#002a4b] mt-3">
-              Featured Equipment
+              Featured Equipments
             </h2>
           </div>
           {/* Link to the first valid category instead of product-a */}
