@@ -7,28 +7,28 @@ import { createPageUrl } from "../../utils";
 
 const products = [
   {
-    id: 'product-a',
+    id: 'water-quality-analyzer', // Updated ID to match Category Slug
     name: 'Water Quality Analyzer',
     description: 'A versatile unit capable of measuring pH, Conductivity, and TOC simultaneously. The ultimate all-in-one solution for lab water diagnostics.',
     image: 'https://www.bluesen.com/en/images/sub/product/img_aqua2000_5x.png',
     partner: 'BLUESEN'
   },
   {
-    id: 'product-b',
+    id: 'raman-spectroscopy', // Updated ID to match Category Slug
     name: 'Hand Held Raman Spectrometer',
     description: 'Bring the lab to the sample. Rugged, lightweight, and fast—perfect for incoming raw material verification and field testing.',
     image: 'https://www.jinsptech.com/uploads/products-1.jpg',
     partner: 'JINSP'
   },
   {
-    id: 'product-c',
+    id: 'electrolyzers', // Updated ID to match Category Slug
     name: 'Hydrogen Generators',
     description: 'Large scale electrolysis stacks designed for industrial hydrogen applications and energy storage.',
     image: 'https://leancatwe.com/wp-content/uploads/2025/03/rack_new-1024x1024.png',
     partner: 'Leancat Electrolyzers'
   },
   {
-    id: 'product-d',
+    id: 'electrolyzer-test-stations', // Updated ID to match Category Slug (Contains Fuel Cell Stations)
     name: 'Fuel Cell Test Stations',
     description: 'Complete test stations for characterization of PEM and SOFC fuel cells.',
     image: 'https://lean-cat.com/wp-content/uploads/2022/03/P1180271_transparent1-2-1229x1536.png',
@@ -56,7 +56,8 @@ export default function ProductShowcase() {
               Featured Equipment
             </h2>
           </div>
-          <Link to={createPageUrl('ProductDetail') + '?product=product-a'}>
+          {/* Link to the first valid category instead of product-a */}
+          <Link to={createPageUrl('ProductDetail') + '?product=lab-water-purification-system'}>
             <Button variant="outline" className="border-[#002a4b] text-[#002a4b] hover:bg-[#002a4b] hover:text-white group">
               View All Products
               <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

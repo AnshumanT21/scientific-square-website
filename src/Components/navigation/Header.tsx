@@ -7,6 +7,8 @@ import { createPageUrl } from '../../utils';
 // Updated Product List
 const products = [
   { name: 'Lab Water Purification System', slug: 'lab-water-purification-system' },
+  { name: 'Online TOC Analyzer BerryPURE TOC', slug: 'online-toc-analyzer-berrypure-toc' }, // Added this new item
+  { name: 'Water Quality Analyzer', slug: 'water-quality-analyzer' },
   { name: 'Battery and Fuel Cell Test Systems', slug: 'battery-fuel-cell-test-systems' },
   { name: 'Electrolyzers', slug: 'electrolyzers' },
   { name: 'Electrolyzer Test Stations', slug: 'electrolyzer-test-stations' },

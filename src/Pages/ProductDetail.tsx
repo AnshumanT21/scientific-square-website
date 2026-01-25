@@ -29,6 +29,7 @@ interface ProductVariant {
   description: string;
   image: string;
   productUrl: string;
+  specs?: string[]; // Added specs optional to variants if needed for override
 }
 
 interface Product {
@@ -46,7 +47,8 @@ interface Product {
 
 // --- Data: Categories containing Arrays of Products ---
 const categoriesData: Record<string, Product[]> = {
-  'lab-water-purification-system': [
+  // 1. Online TOC Analyzer BerryPURE TOC (NEW CATEGORY)
+  'online-toc-analyzer-berrypure-toc': [
     {
       name: 'Online TOC Analyzer BerryPURE TOC',
       tagline: 'Continuous Water Quality Monitoring',
@@ -61,7 +63,103 @@ const categoriesData: Record<string, Product[]> = {
         { icon: Zap, title: 'Low Maintenance', desc: 'Reagent-free oxidation technology' }
       ],
       specs: ['Range: 0.5 to 1000 ppb', 'Response Time: < 1 min', 'Touchscreen Interface']
+    }
+  ],
+
+  // 2. Water Quality Analyzer
+  'water-quality-analyzer': [
+    {
+      name: 'Aqua2000-Series Multiparameter Analyzer',
+      tagline: 'The Ultimate All-in-One Water Quality Solution',
+      description: 'The Aqua2000-5x series offers a comprehensive suite of water quality monitoring solutions. From simultaneous multiparameter analysis to dedicated single-parameter tracking, these instruments are designed for precision, durability, and reagent-free operation.',
+      image: 'https://www.bluesen.com/en/images/sub/product/img_aqua2000_5x.png',
+      partner: 'BLUESEN',
+      partnerLogo: '/Bluesen.png',
+      productUrl: 'https://www.bluesen.com/en/product/product1_aqua2000_5x.asp',
+      features: [
+        { icon: Gauge, title: 'Real-time Analysis', desc: 'Continuous monitoring' },
+        { icon: Shield, title: 'Reagent Free', desc: 'Low maintenance operation' },
+        { icon: Zap, title: 'Smart Calibration', desc: 'Auto-diagnosis & cleaning' }
+      ],
+      specs: ['Power: AC100-240V', 'Protection: IP65/IP66', 'Output: 4-20mA / RS485'],
+      variants: [
+        {
+          id: 'aqua-5x',
+          name: 'Aqua2000-5x',
+          description: 'The flagship multiparameter analyzer capable of measuring 5 key parameters simultaneously: Turbidity, Residual Chlorine, pH, Electrical Conductivity, and Water Temperature. Ideal for municipal water plants and industrial effluent monitoring.',
+          image: 'https://www.bluesen.com/en/images/sub/product/img_aqua2000_5x.png',
+          productUrl: 'https://www.bluesen.com/en/product/product1_aqua2000_5x.asp',
+        },
+        {
+          id: 'aqua-6p',
+          name: 'Aqua2000-6P',
+          description: 'An advanced upgrade to the 5x model, the 6P adds Color measurement to the standard 5 parameters. This 6-in-1 analyzer provides the most complete picture of water quality in a single compact unit.',
+          image: 'https://www.bluesen.com/en/images/sub/product/img_aqua2000_6p.png', 
+          productUrl: 'https://bluesen.com/en/product/product1_aqua2000_6p.asp',
+        },
+        {
+          id: 'aqua-6p-p1',
+          name: 'Aqua2000-6P(P1)',
+          description: 'The ruggedized outdoor version of the 6P. Designed with a specialized double-insulated enclosure (IP66) to withstand harsh external environments while delivering the same 6-parameter precision.',
+          image: 'https://www.bluesen.com/en/images/sub/product/img_aqua2000_6p_p1.png',
+          productUrl: 'https://www.bluesen.com/en/product/product1_aqua2000_6p_p1.asp',
+        },
+        {
+          id: 'aqua-tu90',
+          name: 'Aqua2000-TU90',
+          description: 'A high-precision dedicated Turbidimeter utilizing 90° scattered light method. It features a patented micro-bubble removal system to ensure accurate readings even at ultra-low turbidity levels (<0.1 NTU).',
+          image: 'https://www.bluesen.com/en/images/sub/product/img_tu90.png',
+          productUrl: 'https://bluesen.com/en/product/product1_aqua2000_tu90.asp',
+        },
+        {
+          id: 'aqua-fcl',
+          name: 'Aqua2000-FCL',
+          description: 'Dedicated Free Chlorine analyzer using a reagent-free Polarographic Amperometric sensor. It eliminates the need for DPD reagents, significantly reducing operating costs and maintenance time.',
+          image: 'https://www.bluesen.com/en/images/sub/product/img_aqua2000_fcl.png',
+          productUrl: 'https://bluesen.com/en/product/product1_aqua2000_fcl.asp',
+        },
+        {
+          id: 'aqua-tcl',
+          name: 'Aqua2000-TCL',
+          description: 'Total Chlorine analyzer designed for wastewater and reuse applications. Like the FCL, it operates without reagents and features a durable membrane cap system for long-term stability.',
+          image: 'https://www.bluesen.com/en/images/sub/product/img_aqua2000_tcl.png',
+          productUrl: 'https://bluesen.com/en/product/product1_aqua2000_tcl.asp',
+        },
+        {
+          id: 'aqua-ph',
+          name: 'Aqua2000-pH',
+          description: 'Online pH monitor with integrated temperature compensation. Uses a robust composite glass electrode designed to resist fouling in difficult water matrices.',
+          image: 'https://bluesen.com/board_upload/tb_product/2025_07_01_grtoObGzyL.png',
+          productUrl: 'https://bluesen.com/en/product/product1_aqua2000_ph.asp',
+        },
+        {
+          id: 'aqua-ec',
+          name: 'Aqua2000-EC',
+          description: 'Electrical Conductivity analyzer utilizing a Titanium AC 2-pole electrode. It offers wide-range measurement capability with high chemical resistance and durability.',
+          image: 'https://bluesen.com/board_upload/tb_product/2025_07_01_grtoObGzyL.png',
+          productUrl: 'https://bluesen.com/en/product/product1_aqua2000_ec.asp',
+        }
+      ]
     },
+    {
+      name: 'Movable Turbidimeter',
+      tagline: 'Portable Field Analysis',
+      description: 'A battery-powered, fully portable turbidimeter designed for immediate field deployment. It requires no installation and is perfect for spot-checking water quality in remote locations or during emergency pipe repairs.',
+      image: 'https://bluesen.com/board_upload/tb_product/2025_05_28_mkDcOXSnaU.png', 
+      partner: 'BLUESEN',
+      partnerLogo: '/Bluesen.png',
+      productUrl: 'https://www.bluesen.com/en/product/product1_mobile_turbidimeter.asp', 
+      features: [
+        { icon: Settings, title: 'Portable', desc: 'Battery operated & lightweight' },
+        { icon: Shield, title: 'No Install', desc: 'Immediate "Drop & Measure" use' },
+        { icon: Zap, title: 'Wireless', desc: 'Remote data transmission' }
+      ],
+      specs: ['Power: Internal Battery', 'Use Case: Field / Emergency', 'Comms: Wireless / LTE']
+    }
+  ],
+
+  // 3. Lab Water Systems (TOC Analyzer Removed)
+  'lab-water-purification-system': [
     {
       name: 'BerryPURE mini',
       tagline: 'Compact Lab Water Solution',
@@ -136,22 +234,7 @@ const categoriesData: Record<string, Product[]> = {
         { icon: Shield, title: 'Easy Maintenance', desc: 'Quick cartridge change' }
       ],
       specs: ['Feed: Potable Tap Water', 'Resistivity: 18.2 MΩ-cm', 'Dispensing: Manual/Volumetric']
-    },
-    {
-      name: 'Water Quality Analyzer',
-      tagline: 'Comprehensive Multiparameter Testing',
-      description: 'This multiparameter analyzer offers simultaneous measurement of pH, conductivity, and TOC. Its robust IP54 enclosure makes it suitable for demanding lab environments where rapid diagnostics are required.',
-      image: 'https://www.bluesen.com/en/images/sub/product/img_aqua2000_5x.png',
-      partner: 'Bluesen',
-      partnerLogo: '/Bluesen.png', // Fixed filename
-      productUrl: 'https://www.bluesen.com/en/product/product1.asp',
-      features: [
-        { icon: Gauge, title: 'Multiparameter', desc: 'pH, Conductivity, TOC in one' },
-        { icon: Shield, title: 'Robust Design', desc: 'IP54 rated enclosure' },
-        { icon: Zap, title: 'Rapid Results', desc: 'Full profile in under 3 mins' }
-      ],
-      specs: ['pH Range: 0-14', 'Conductivity: 0.055 µS/cm', 'Power: 110/220V']
-    },
+    }
   ],
   'raman-spectroscopy': [
     {
