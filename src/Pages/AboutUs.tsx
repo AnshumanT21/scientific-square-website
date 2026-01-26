@@ -13,18 +13,15 @@ import AnimatedCounter from '../Components/AnimatedCounter';
 
 export default function AboutUs() {
   const storyRef = useRef(null);
-  const founderRef = useRef(null);
+  const visionRef = useRef(null); 
   const valuesRef = useRef(null);
-  // NEW: Dedicated ref for the stats grid to ensure late triggering
   const statsRef = useRef(null);
 
   const storyInView = useInView(storyRef, { once: true, margin: "-100px" });
-  const founderInView = useInView(founderRef, { once: true, margin: "-100px" });
+  const visionInView = useInView(visionRef, { once: true, margin: "-100px" });
   const valuesInView = useInView(valuesRef, { once: true, margin: "-100px" });
-  // NEW: Triggers only when the stats grid is actually on screen
   const statsInView = useInView(statsRef, { once: true, margin: "-50px" });
 
-  // Authentic Stats for a Startup
   const stats = [
     { icon: Award, value: 30, suffix: '+', label: 'Years of Founder Expertise' },
     { icon: Globe2, value: 7, suffix: '+', label: 'Global Tech Partners' },
@@ -36,7 +33,7 @@ export default function AboutUs() {
     {
       icon: Lightbulb,
       title: "Innovation First",
-      desc: "We don't just sell equipment; we curate the latest technological advancements from around the globe to solve local challenges."
+      desc: "We don't just sell equipment; we curate the latest technological advancements from around the globe to solve complex challenges."
     },
     {
       icon: ShieldCheck,
@@ -121,7 +118,7 @@ export default function AboutUs() {
               
               <div className="space-y-6 text-gray-600 text-lg leading-relaxed text-justify">
                 <p>
-                  <strong className="text-[#002a4b]">ScientificSquare</strong> was founded in 2024, but its roots go much deeper. After spending over 30 years shaping the scientific equipment landscape in India, our founder, <span className="text-[#002a4b] font-semibold">Rajeev Tyagi</span>, identified a critical gap in the market.
+                  <strong className="text-[#002a4b]">ScientificSquare</strong> was founded in 2024, but its roots go much deeper. After spending over 30 years shaping the scientific equipment landscape, our founder, <span className="text-[#002a4b] font-semibold">our company</span>, identified a critical gap in the market.
                 </p>
                 <p>
                   The industry was flooded with products, but starved of true application support. Researchers weren't just looking for boxes; they needed partners who understood the science behind the machine.
@@ -173,7 +170,7 @@ export default function AboutUs() {
                   <span className="font-bold text-[#002a4b] text-sm">Open for Business</span>
                 </div>
                 <p className="text-xs text-gray-500">
-                  Ready to serve laboratories across India with our global partner network.
+                  Ready to serve laboratories with our global partner network.
                 </p>
               </motion.div>
             </motion.div>
@@ -181,89 +178,151 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* Founder Profile - "The Anchor" */}
-      <section ref={founderRef} className="py-24 bg-[#002a4b] text-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* "Our Vision" Section */}
+      <section ref={visionRef} className="py-24 bg-[#002a4b] text-white overflow-hidden relative">
+        {/* Animated Background Elements for "Pop" */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+           <motion.div 
+             className="absolute top-20 right-20 w-32 h-32 rounded-full border border-white/5"
+             animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.3, 0.1] }}
+             transition={{ duration: 6, repeat: Infinity }}
+           />
+           <motion.div 
+             className="absolute bottom-40 left-10 w-64 h-64 rounded-full border border-[#d09b2c]/10"
+             animate={{ rotate: 360 }}
+             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+           />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             
-            {/* Founder Image Area */}
+            {/* Visual Representation of Moving Items (Vision Graphic) */}
             <div className="lg:col-span-5 relative">
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={founderInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={visionInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.8 }}
+                className="relative flex items-center justify-center aspect-square"
               >
-                <div className="relative z-10 rounded-2xl overflow-hidden border-4 border-[#d09b2c]/30 shadow-2xl aspect-[3/4] max-w-sm mx-auto lg:mx-0">
-                  <div className="w-full h-full bg-gradient-to-b from-gray-700 to-gray-900 flex items-center justify-center">
-                     {/* Placeholder for Rajeev Tyagi's Image */}
-                     <div className="text-center p-8">
-                        <div className="w-24 h-24 rounded-full bg-[#d09b2c] mx-auto mb-4 flex items-center justify-center text-3xl font-bold text-[#002a4b]">RT</div>
-                     </div>
-                  </div>
+                {/* Orbital Ring 1 (Outer Orange) */}
+                <motion.div 
+                  className="absolute w-full h-full rounded-full border border-dashed border-[#d09b2c]/30"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                />
+                
+                {/* Orbital Ring 2 (Inner Purple) */}
+                <motion.div 
+                  className="absolute w-[80%] h-[80%] rounded-full border border-[#9391c7]/30"
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                />
+
+                {/* ----- ATOMS ----- */}
+
+                {/* Outer Orbit Container (Matches Orange Ring size & rotation direction) */}
+                <motion.div
+                  className="absolute w-full h-full rounded-full"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                >
+                   {/* EXISTING PURPLE ATOM (TOP) */}
+                   <motion.div 
+                     className="absolute top-0 left-1/2 -translate-x-1/2 -mt-1.5 w-3 h-3 bg-[#9391c7] rounded-full shadow-[0_0_10px_#9391c7]"
+                     animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
+                     transition={{ duration: 3, repeat: Infinity }}
+                   />
+                   {/* NEW ORANGE ATOM (BOTTOM - OPPOSITE) */}
+                   <motion.div 
+                     className="absolute bottom-0 left-1/2 -translate-x-1/2 -mb-1.5 w-3 h-3 bg-[#d09b2c] rounded-full shadow-[0_0_10px_#d09b2c]"
+                     animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
+                     transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
+                   />
+                </motion.div>
+
+                {/* Inner Orbit Container (Matches Purple Ring size & rotation direction) */}
+                <motion.div
+                  className="absolute w-[80%] h-[80%] rounded-full"
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                >
+                   {/* EXISTING ORANGE ATOM (TOP) */}
+                   <motion.div 
+                     className="absolute top-0 left-1/2 -translate-x-1/2 -mt-2 w-4 h-4 bg-[#d09b2c] rounded-full shadow-[0_0_15px_#d09b2c]"
+                     animate={{ scale: [1, 1.5, 1] }}
+                     transition={{ duration: 2, repeat: Infinity }}
+                   />
+                   {/* NEW PURPLE ATOM (BOTTOM - OPPOSITE) */}
+                   <motion.div 
+                     className="absolute bottom-0 left-1/2 -translate-x-1/2 -mb-2 w-4 h-4 bg-[#9391c7] rounded-full shadow-[0_0_15px_#9391c7]"
+                     animate={{ scale: [1, 1.5, 1] }}
+                     transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                   />
+                </motion.div>
+
+                {/* Central Image Container */}
+                <div className="relative z-10 w-[60%] h-[60%] rounded-full overflow-hidden border-4 border-[#d09b2c]/20 shadow-[0_0_40px_rgba(208,155,44,0.1)] bg-black flex items-center justify-center group">
+                    <img 
+                      src="/ScientificSquareLogo.jpeg" // Company Logo
+                      alt="ScientificSquare" 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                    />
                 </div>
-                {/* Decorative Pattern */}
-                <div className="absolute top-10 -left-10 w-full h-full border-2 border-[#d09b2c] rounded-2xl -z-0 opacity-50 hidden lg:block" />
               </motion.div>
             </div>
 
-            {/* Founder Content */}
+            {/* Vision Content */}
             <div className="lg:col-span-7">
               <motion.div
                 initial={{ opacity: 0, x: 50 }}
-                animate={founderInView ? { opacity: 1, x: 0 } : {}}
+                animate={visionInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <div className="mb-8">
-                  <h3 className="text-[#d09b2c] text-lg font-medium mb-2">Meet the Visionary</h3>
-                  <h2 className="text-4xl lg:text-5xl font-bold mb-4">Rajeev Tyagi</h2>
-                  <p className="text-xl text-gray-300">Founder & CEO</p>
+                  <h3 className="text-[#d09b2c] text-lg font-medium mb-2 tracking-wide uppercase">Our Ambition</h3>
+                  <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+                    Empowering Science. <br/>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">Enabling the Future.</span>
+                  </h2>
                 </div>
 
-                <div className="space-y-6 text-gray-300 text-lg leading-relaxed">
+                <div className="space-y-6 text-gray-300 text-lg leading-relaxed text-justify">
                   <p>
-                    "Experience is not just about the years you serve, but the problems you solve."
+                    At <span className="text-white font-semibold">ScientificSquare</span>, our vision is to architect a scientific ecosystem where breakthrough research is powered by the world's finest instrumentation. We see a future where geographical boundaries do not limit scientific potential.
                   </p>
                   <p>
-                    With over 30 years of hands-on experience in the scientific domain, Rajeev has witnessed the evolution of laboratory technology first-hand. He founded ScientificSquare to answer a simple question: <span className="text-white font-semibold">How can we make world-class technology accessible and understandable for Indian researchers?</span>
+                    We aim to be the catalyst that transforms laboratories into global hubs of innovation. By bridging the gap between cutting-edge global technology and diverse applications, we strive to solve humanity's most pressing challenges—from <span className="text-[#d09b2c]">sustainable energy storage</span> to <span className="text-[#d09b2c]">water security</span>.
                   </p>
                   <p>
-                    His vision drives our selection of partners—focusing only on manufacturers like Berrytec and Leancat who share our ethos of precision and durability.
-                  </p>
-                </div>
-
-                {/* Signature / Quote */}
-                <div className="mt-10 pt-8 border-t border-white/10">
-                  <p className="font-handwriting text-2xl text-[#d09b2c] italic">
-                    "We are just getting started."
+                    We are not just distributors; we are enablers of the hydrogen economy and guardians of analytical precision, committed to building a resilient and self-reliant scientific infrastructure for the global community.
                   </p>
                 </div>
               </motion.div>
             </div>
           </div>
 
-          {/* Authentic Stats Grid with Counters - USING statsRef HERE */}
+          {/* Authentic Stats Grid with Counters */}
           <div ref={statsRef} className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/10 pt-16">
              {stats.map((stat, idx) => (
                 <motion.div 
                   key={idx}
                   className="text-center"
                   initial={{ opacity: 0, y: 20 }}
-                  // Only animate when the STATS grid is in view, not the founder header
                   animate={statsInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.1 + (idx * 0.1) }}
                 >
-                   <motion.div
-                     whileHover={{ scale: 1.1, rotate: 5 }}
-                     className="w-8 h-8 mx-auto mb-4"
-                   >
-                    <stat.icon className="w-full h-full text-[#d09b2c]" />
-                   </motion.div>
-                   
-                   <div className="text-3xl lg:text-4xl font-bold text-white mb-1 flex justify-center">
-                      {/* Pass statsInView here to trigger counting */}
+                    <motion.div
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      className="w-8 h-8 mx-auto mb-4"
+                    >
+                     <stat.icon className="w-full h-full text-[#d09b2c]" />
+                    </motion.div>
+                    
+                    <div className="text-3xl lg:text-4xl font-bold text-white mb-1 flex justify-center">
                       <AnimatedCounter value={stat.value} isInView={statsInView} suffix={stat.suffix} />
-                   </div>
-                   <div className="text-sm text-gray-400 uppercase tracking-wider">{stat.label}</div>
+                    </div>
+                    <div className="text-sm text-gray-400 uppercase tracking-wider">{stat.label}</div>
                 </motion.div>
              ))}
           </div>
@@ -292,13 +351,13 @@ export default function AboutUs() {
                     }}
                     transition={{ delay: 0.2 * idx }}
                   >
-                     <div className="w-12 h-12 rounded-lg bg-[#002a4b] text-white flex items-center justify-center mb-6">
-                        <value.icon className="w-6 h-6" />
-                     </div>
-                     <h3 className="text-xl font-bold text-[#002a4b] mb-4">{value.title}</h3>
-                     <p className="text-gray-600 leading-relaxed">
-                        {value.desc}
-                     </p>
+                      <div className="w-12 h-12 rounded-lg bg-[#002a4b] text-white flex items-center justify-center mb-6">
+                         <value.icon className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-xl font-bold text-[#002a4b] mb-4">{value.title}</h3>
+                      <p className="text-gray-600 leading-relaxed">
+                         {value.desc}
+                      </p>
                   </motion.div>
                ))}
             </div>
