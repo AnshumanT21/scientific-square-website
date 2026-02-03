@@ -251,7 +251,7 @@ export default function NewsEvents() {
 
                   <motion.div variants={itemVariants} className="pt-6 border-t border-white/10">
                     <p className="text-sm text-gray-500">
-                      Scientific Square is now operational and ready to serve laboratories across the nation. Join us as we redefine the benchmarks of scientific excellence.
+                      Scientific Square is now operational and ready to serve laboratories across the world. Join us as we redefine the benchmarks of scientific excellence.
                     </p>
                   </motion.div>
                 </motion.div>
