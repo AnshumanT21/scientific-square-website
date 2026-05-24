@@ -38,7 +38,7 @@ const products = [
     id: 'electrolyzers', // Updated ID to match Category Slug
     name: 'Hydrogen Generators',
     description: 'Large scale electrolysis stacks designed for industrial hydrogen applications and energy storage.',
-    image: 'https://leancatwe.com/wp-content/uploads/2025/03/rack_new-1024x1024.png',
+    image: 'https://cdn.prod.website-files.com/690b0d979a1c16d1f2c07e02/69224572cbf416178c72aed6_rack_new_transparent.png',
     partner: 'Leancat Electrolyzers'
   },
   {
@@ -82,7 +82,7 @@ export default function ProductShowcase() {
           <div>
             <span className="text-[#d09b2c] font-semibold tracking-wider uppercase text-sm">Our Products</span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#002a4b] mt-3">
-              Featured Equipments
+              Featured Equipments  
             </h2>
           </div>
           {/* Link to the first valid category instead of product-a */}
