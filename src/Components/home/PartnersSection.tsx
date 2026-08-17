@@ -18,6 +18,7 @@ const partners = [
   { name: 'LEANCAT', logo: '/LEANCAT.png' }, 
   { name: 'Kolibrik', logo: '/Kolibrik.png' },
   { name: 'Bluesen', logo: '/Bluesen.png' },
+  { name: 'EN-SCAN', logo: '/EnScan.png' },
 ];
 
 // New "Industries" data instead of Testimonials
