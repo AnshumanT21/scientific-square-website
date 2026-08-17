@@ -47,6 +47,25 @@ interface Product {
 
 // --- Data: Categories containing Arrays of Products ---
 const categoriesData: Record<string, Product[]> = {
+  // 0. Hand Held / Portable GC (NEW CATEGORY)
+  'hand-held-portable-gc': [
+    {
+      name: 'EN-SCAN Labrador Handheld GC',
+      tagline: 'Lab-Grade Gas Chromatography in the Field',
+      description: 'A rugged, portable gas chromatograph that brings laboratory-grade analysis directly to the field. It enables environmental professionals to detect VOCs and contaminants in air, soil, and water within minutes, with parts-per-billion sensitivity and results in as little as 4.5 to 15 minutes, eliminating the wait for off-site lab results.',
+      image: '/ENScanPortable.png',
+      partner: 'EN-SCAN',
+      partnerLogo: '/EnScan.png',
+      productUrl: 'https://www.en-scan.com/products/labrador-hhgc',
+      features: [
+        { icon: Zap, title: 'Real-Time Data', desc: 'On-site results in minutes' },
+        { icon: Settings, title: 'Rugged & Portable', desc: 'Built for field deployment' },
+        { icon: Shield, title: 'Multi-Media Analysis', desc: 'Analyzes VOCs in air, water & soil' }
+      ],
+      specs: ['Detector: Photoionization (10.6 eV)', 'Sensitivity: ppb / ppbv', 'Analysis Time: ~10 min', 'Weight: 6.80 kg (15 lb)']
+    }
+  ],
+
   // 1. Online TOC Analyzer BerryPURE TOC (NEW CATEGORY)
   'online-toc-analyzer-berrypure-toc': [
     {
