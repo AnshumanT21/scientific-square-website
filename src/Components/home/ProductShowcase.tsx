@@ -42,7 +42,7 @@ const products = [
     partner: 'Leancat Electrolyzers'
   },
   {
-    id: 'online-toc-analyzer-berrypure-toc', // Updated ID to match Category Slug
+    id: 'online-toc-analyzer', // Updated ID to match Category Slug
     name: 'Online TOC Analyzer BerryPURE TOC',
     description: 'A precision instrument designed for the continuous monitoring of Total Organic Carbon in purified water systems. It ensures strict compliance with pharmaceutical standards such as USP <643> and EP 2.2.44 through reagent-free UV oxidation technology.',
     image: 'https://images.squarespace-cdn.com/content/v1/5c76c9137fdcb8facd7603f4/d66d51a1-4f8d-4773-8a5c-182d03550dec/TOC.png',

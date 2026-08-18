@@ -8,7 +8,7 @@ import { createPageUrl } from '../../utils';
 const products = [
   { name: 'Hand Held / Portable GC', slug: 'hand-held-portable-gc' },
   { name: 'Lab Water Purification System', slug: 'lab-water-purification-system' },
-  { name: 'Online TOC Analyzer BerryPURE TOC', slug: 'online-toc-analyzer-berrypure-toc' }, // Added this new item
+  { name: 'Online TOC Analyzer', slug: 'online-toc-analyzer' }, // Added this new item
   { name: 'Water Quality Analyzer', slug: 'water-quality-analyzer' },
   { name: 'Battery and Fuel Cell Test Systems', slug: 'battery-fuel-cell-test-systems' },
   { name: 'Electrolyzers', slug: 'electrolyzers' },

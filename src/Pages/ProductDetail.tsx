@@ -67,7 +67,7 @@ const categoriesData: Record<string, Product[]> = {
   ],
 
   // 1. Online TOC Analyzer BerryPURE TOC (NEW CATEGORY)
-  'online-toc-analyzer-berrypure-toc': [
+  'online-toc-analyzer': [
     {
       name: 'Online TOC Analyzer BerryPURE TOC',
       tagline: 'Continuous Water Quality Monitoring',
@@ -693,8 +693,16 @@ export default function ProductDetail() {
     .slice(0, 3);
 
   // Helper to get formatted name from slug
+  const ALL_CAPS_WORDS = ['gc']; // Add other abbreviations here if needed (e.g. 'toc', 'hplc')
   const getCategoryName = (slug: string) => {
-    return slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    return slug
+      .split('-')
+      .map(word =>
+        ALL_CAPS_WORDS.includes(word.toLowerCase())
+          ? word.toUpperCase()
+          : word.charAt(0).toUpperCase() + word.slice(1)
+      )
+      .join(' ');
   };
 
   return (
