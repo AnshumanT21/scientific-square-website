@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { createPageUrl } from '../../utils';
@@ -21,6 +21,9 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
+  const { pathname } = useLocation();
+  // the home hero is dark: use light text until the header turns white on scroll
+  const onDarkHero = pathname === '/' && !isScrolled && !mobileMenuOpen;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -75,7 +78,7 @@ export default function Header() {
               </div>
             </motion.div>
             <div className="hidden sm:block">
-              <h1 className={`text-lg md:text-xl font-bold transition-colors ${isScrolled ? 'text-[#002a4b]' : 'text-[#002a4b]'}`}>
+              <h1 className={`text-lg md:text-xl font-bold transition-colors ${onDarkHero ? 'text-white' : 'text-[#002a4b]'}`}>
                 ScientificSquare
               </h1>
               <p className="text-xs text-[#9391c7] -mt-0.5">Precision & Innovation</p>
@@ -89,7 +92,9 @@ export default function Header() {
                 {item.hasDropdown ? (
                   <button
                     className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-1 ${
-                      isScrolled 
+                      onDarkHero
+                        ? 'text-white/85 hover:text-white hover:bg-white/10'
+                        : isScrolled
                         ? 'text-[#002a4b] hover:bg-[#002a4b]/5' 
                         : 'text-[#002a4b] hover:bg-white/50'
                     }`}
@@ -104,7 +109,9 @@ export default function Header() {
                     to={item.href}
                     onClick={() => window.scrollTo(0, 0)}
                     className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                      isScrolled 
+                      onDarkHero
+                        ? 'text-white/85 hover:text-white hover:bg-white/10'
+                        : isScrolled
                         ? 'text-[#002a4b] hover:bg-[#002a4b]/5' 
                         : 'text-[#002a4b] hover:bg-white/50'
                     }`}
@@ -158,13 +165,13 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2 rounded-lg bg-[#002a4b]/5 hover:bg-[#002a4b]/10 transition-colors"
+            className={`lg:hidden p-2 rounded-lg transition-colors ${onDarkHero ? 'bg-white/10 hover:bg-white/20' : 'bg-[#002a4b]/5 hover:bg-[#002a4b]/10'}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (
               <X className="w-6 h-6 text-[#002a4b]" />
             ) : (
-              <Menu className="w-6 h-6 text-[#002a4b]" />
+              <Menu className={`w-6 h-6 ${onDarkHero ? 'text-white' : 'text-[#002a4b]'}`} />
             )}
           </button>
         </div>

@@ -1,218 +1,233 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '../ui/button';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, ArrowDown } from 'lucide-react';
+import ParticleRing from './ParticleRing';
+import AnimatedCounter from '../AnimatedCounter';
 import { createPageUrl } from '../../utils';
-import AnimatedCounter from '../AnimatedCounter'
 
-const heroImages = [
-  {
-    url: 'https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=800&q=80',
-    alt: 'Laboratory Equipment'
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&q=80',
-    alt: 'Microscope Analysis'
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800&q=80',
-    alt: 'Lab Research'
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80',
-    alt: 'Scientific Instruments'
-  }
+const ease = [0.16, 1, 0.3, 1] as const;
+
+const stats = [
+  { value: 30, suffix: '+', label: 'Years Experience' },
+  { value: 8, suffix: '', label: 'Global Partners' },
+  { value: 100, suffix: '%', label: 'Application Support' },
 ];
 
-export default function HeroSection() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const statsRef = useRef(null);
-  const statsInView = useInView(statsRef, { once: true, margin: "-100px" });
+const display = { fontFamily: '"Space Grotesk", Inter, system-ui, sans-serif' };
+const mono = { fontFamily: '"JetBrains Mono", ui-monospace, monospace' };
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
-    return () => clearInterval(timer);
+// Styles the hero needs that aren't in the site's Tailwind config.
+const heroCss = `
+  .ss-hero-gradient {
+    background: linear-gradient(100deg, #b4b2f5 0%, #9391c7 40%, #d09b2c 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .ss-hero-grid {
+    background-image:
+      linear-gradient(to right, rgba(147,145,199,0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(147,145,199,0.07) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse at 70% 45%, black, transparent 70%);
+  }
+`;
+
+/** Masked word-by-word rise, like type being set. */
+function SplitWords({ text, delay = 0, gradient = false }: { text: string; delay?: number; gradient?: boolean }) {
+  const words = text.split(' ');
+  return (
+    <span aria-label={text}>
+      {words.map((w, i) => (
+        <span key={i} className="-mb-[0.14em] inline-block overflow-hidden pb-[0.12em] align-bottom" aria-hidden>
+          <motion.span
+            // padding-bottom extends the box the gradient is painted into, so the
+            // descenders of "y" and "p" aren't left transparent
+            className={`inline-block pb-[0.14em] ${gradient ? 'ss-hero-gradient' : ''}`}
+            initial={{ y: '110%', rotate: 4 }}
+            animate={{ y: '0%', rotate: 0 }}
+            transition={{ duration: 0.9, delay: delay + i * 0.06, ease }}
+          >
+            {w}
+            {i < words.length - 1 && ' '}
+          </motion.span>
+        </span>
+      ))}
+    </span>
+  );
+}
+
+export default function HeroSection() {
+  const ref = useRef<HTMLElement>(null);
+  const statsRef = useRef(null);
+  const statsInView = useInView(statsRef, { once: true });
+
+  // seconds to offset the intro animations by
+  const intro = 0;
+
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-30%']);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
+
+  const layout = useCallback((w: number, h: number) => {
+    if (w >= 1024) return { cx: w * 0.72, cy: h * 0.46, R: Math.min(w * 0.17, h * 0.27) };
+    // smaller screens: tuck the ring into the top-right, above the bottom-aligned copy
+    if (w >= 640) return { cx: w * 0.78, cy: h * 0.2, R: Math.min(w * 0.12, h * 0.11) };
+    // phones: fixed position near the top; the copy below reserves room for it (pt-64)
+    return { cx: w * 0.62, cy: 150, R: Math.min(w * 0.19, 72) };
   }, []);
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length);
-
   return (
-    <section className="min-h-screen pt-20 lg:pt-0 flex items-center relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-[#9391c7]/5">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-[#d09b2c]/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#9391c7]/10 rounded-full blur-3xl" />
+    <section ref={ref} className="relative flex min-h-[100svh] flex-col overflow-hidden bg-[#050b14] text-white">
+      {/* fonts + hero-only styles (React 19 hoists the stylesheet link into <head>) */}
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap"
+        precedence="default"
+      />
+      <style>{heroCss}</style>
+
+      {/* atmosphere */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute right-[-10%] top-[-10%] h-[80vh] w-[80vh] rounded-full bg-[#9391c7]/[0.12] blur-[140px]" />
+        <div className="absolute bottom-[-20%] left-[-10%] h-[60vh] w-[60vh] rounded-full bg-[#002a4b]/60 blur-[120px]" />
+        <div className="ss-hero-grid absolute inset-0" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-0 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Left Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+      <ParticleRing layout={layout} scatter={scrollYProgress} startDelay={intro * 1000} />
+
+      <HudCorners delay={intro} />
+
+      <motion.div
+        style={{ y: contentY, opacity: contentOpacity }}
+        className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-4 pb-10 pt-64 sm:px-6 sm:pt-28 lg:justify-center lg:px-8 lg:pb-0"
+      >
+        <div className="max-w-[640px]">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: intro + 0.3, ease }}
+            className="mb-7 text-[15px] text-white/55"
           >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#002a4b]/5 text-[#002a4b] text-sm font-medium mb-6"
-            >
-              <span className="w-2 h-2 rounded-full bg-[#d09b2c] animate-pulse" />
-              {/* CHANGED: From "Trusted by 500+ Labs" to something authoritative but true */}
-              Authorized & Exclusive Distributor
-            </motion.div>
+            Authorized &amp; exclusive distributor for{' '}
+            <span className="text-white/90">8 global instrument manufacturers</span>
+          </motion.p>
 
-            <motion.h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#002a4b] leading-tight mb-6"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              Welcome to{' '}
-              <span className="relative">
-                <span className="relative z-10 bg-gradient-to-r from-[#d09b2c] to-[#9391c7] bg-clip-text text-transparent">
-                  ScientificSquare
-                </span>
-                <motion.span
-                  className="absolute bottom-2 left-0 right-0 h-3 bg-[#d09b2c]/20 -z-0"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: 1, duration: 0.6 }}
-                />
-              </span>
-            </motion.h1>
+          <h1
+            style={display}
+            className="text-[clamp(2.6rem,min(5.6vw,9.5vh),5.4rem)] font-semibold leading-[0.98] tracking-[-0.035em]"
+          >
+            <span className="block">
+              <SplitWords text="Precision in" delay={intro + 0.45} />
+            </span>
+            <span className="block">
+              <SplitWords text="every measure." delay={intro + 0.6} />
+            </span>
+            <span className="block">
+              <SplitWords text="Innovation in" delay={intro + 0.8} gradient />
+            </span>
+            <span className="block">
+              <SplitWords text="every step." delay={intro + 0.95} gradient />
+            </span>
+          </h1>
 
-            <motion.p
-              className="text-lg sm:text-xl text-gray-600 mb-8 leading-relaxed max-w-lg"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-            >
-              Precision in Every Measure, Innovation in Every Step.{' '}
-              <span className="text-[#9391c7]">Empowering scientific discovery</span> with world-class laboratory equipment.
-            </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: intro + 1.25, ease }}
+            className="mt-6 max-w-[520px] text-base leading-relaxed text-white/65 sm:text-lg"
+          >
+            Empowering scientific discovery with world-class laboratory equipment — from ultrapure water to green
+            hydrogen, backed by three decades of application expertise.
+          </motion.p>
 
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: intro + 1.4, ease }}
+            className="mt-8 flex flex-wrap items-center gap-3"
+          >
+            <Link
+              to={createPageUrl('ProductDetail') + '?product=lab-water-purification-system'}
+              onClick={() => window.scrollTo(0, 0)}
+              className="group inline-flex items-center gap-2 rounded-full bg-[#d09b2c] px-6 py-3.5 text-sm font-medium text-[#050b14] transition-all duration-300 hover:bg-[#e6bd62] hover:shadow-[0_10px_40px_-10px_rgba(208,155,44,0.7)]"
             >
-              <Link to={createPageUrl('ContactUs')}>
-                <Button className="bg-[#002a4b] hover:bg-[#002a4b]/90 text-white px-8 py-6 text-lg rounded-xl shadow-lg shadow-[#002a4b]/20 group">
-                  Contact Us
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-              <Link to={createPageUrl('AboutUs')}>
-                <Button variant="outline" className="border-2 border-[#002a4b] text-[#002a4b] hover:bg-[#002a4b] hover:text-white px-8 py-6 text-lg rounded-xl">
-                  Learn More
-                </Button>
-              </Link>
-            </motion.div>
-
-            {/* Stats */}
-            <motion.div
-              ref={statsRef}
-              className="flex gap-8 mt-12 pt-8 border-t border-gray-200"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
+              Explore Products
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+            <Link
+              to={createPageUrl('ContactUs')}
+              onClick={() => window.scrollTo(0, 0)}
+              className="inline-flex items-center rounded-full border border-white/20 px-6 py-3.5 text-sm font-medium text-white transition-all duration-300 hover:border-white/50 hover:bg-white/5"
             >
-              {/* UPDATED STATS TO BE FACTUAL FOR A STARTUP */}
-              {[
-                { value: 30, suffix: '+', label: 'Years Experience' }, // Founder's experience
-                { value: 7, suffix: '+', label: 'Global Partners' },   // Berrytec, JINSP, Leancat, Kolibrik, etc.
-                { value: 100, suffix: '%', label: 'Application Support' } // Commitment to quality service
-              ].map((stat, idx) => (
-                <div key={idx}>
-                  <p className="text-2xl sm:text-3xl font-bold text-[#d09b2c]">
-                    <AnimatedCounter value={stat.value} isInView={statsInView} suffix={stat.suffix} />
-                  </p>
-                  <p className="text-sm text-gray-500">{stat.label}</p>
-                </div>
-              ))}
-            </motion.div>
+              Talk to an Expert
+            </Link>
           </motion.div>
 
-          {/* Right Content - Image Carousel */}
-          <motion.div
-            className="relative"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+          <motion.dl
+            ref={statsRef}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: intro + 1.7 }}
+            className="mt-10 hidden grid-cols-3 gap-8 border-t border-white/10 pt-5 sm:grid sm:max-w-[480px]"
           >
-            <div className="relative aspect-square max-w-lg mx-auto">
-              {/* Main Image Container */}
-              <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl">
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={currentSlide}
-                    src={heroImages[currentSlide].url}
-                    alt={heroImages[currentSlide].alt}
-                    className="w-full h-full object-cover"
-                    initial={{ opacity: 0, scale: 1.1 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.7 }}
-                  />
-                </AnimatePresence>
-                
-                {/* Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#002a4b]/30 to-transparent" />
+            {stats.map((s) => (
+              <div key={s.label}>
+                <dd style={display} className="text-3xl font-semibold text-white">
+                  <AnimatedCounter value={s.value} suffix={s.suffix} isInView={statsInView} />
+                </dd>
+                <dt className="mt-1 text-[12px] text-white/50">{s.label}</dt>
               </div>
+            ))}
+          </motion.dl>
+        </div>
+      </motion.div>
 
-              {/* Decorative Elements */}
-              <motion.div
-                className="absolute -top-6 -right-6 w-24 h-24 rounded-2xl bg-[#d09b2c] shadow-xl"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity }}
-              />
-              <motion.div
-                className="absolute -bottom-8 -left-8 w-32 h-32 rounded-2xl bg-[#9391c7] shadow-xl"
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 5, repeat: Infinity }}
-              />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: intro + 2.2 }}
+        style={mono}
+        className="pointer-events-none absolute bottom-8 right-8 z-10 hidden items-center gap-2 text-[10.5px] uppercase tracking-[0.2em] text-white/40 lg:flex"
+      >
+        Scroll
+        <motion.span animate={{ y: [0, 5, 0] }} transition={{ duration: 1.8, repeat: Infinity }}>
+          <ArrowDown className="h-3.5 w-3.5" />
+        </motion.span>
+      </motion.div>
+    </section>
+  );
+}
 
-              {/* Navigation Arrows */}
-              <div className="absolute bottom-4 right-4 flex gap-2">
-                <button
-                  onClick={prevSlide}
-                  className="w-10 h-10 rounded-full bg-white/90 hover:bg-white flex items-center justify-center shadow-lg transition-all"
-                >
-                  <ChevronLeft className="w-5 h-5 text-[#002a4b]" />
-                </button>
-                <button
-                  onClick={nextSlide}
-                  className="w-10 h-10 rounded-full bg-white/90 hover:bg-white flex items-center justify-center shadow-lg transition-all"
-                >
-                  <ChevronRight className="w-5 h-5 text-[#002a4b]" />
-                </button>
-              </div>
+/** Small instrument-style HUD: corner brackets and a live probe coordinate. */
+function HudCorners({ delay }: { delay: number }) {
+  const [pos, setPos] = useState({ x: 0.5, y: 0.5 });
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => setPos({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });
+    window.addEventListener('pointermove', onMove, { passive: true });
+    return () => window.removeEventListener('pointermove', onMove);
+  }, []);
 
-              {/* Slide Indicators */}
-              <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex gap-2">
-                {heroImages.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentSlide(idx)}
-                    className={`h-2 rounded-full transition-all ${
-                      idx === currentSlide 
-                        ? 'w-8 bg-[#d09b2c]' 
-                        : 'w-2 bg-gray-300 hover:bg-gray-400'
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-          </motion.div>
+  const corner = 'absolute h-4 w-4 border-white/25';
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: delay + 0.5, duration: 1 }}
+      className="pointer-events-none absolute inset-0 z-[5] hidden lg:block"
+      aria-hidden
+    >
+      <div className="absolute right-[6%] top-[15%] h-[62%] w-[44%]">
+        <span className={`${corner} left-0 top-0 border-l border-t`} />
+        <span className={`${corner} right-0 top-0 border-r border-t`} />
+        <span className={`${corner} bottom-0 left-0 border-b border-l`} />
+        <span className={`${corner} bottom-0 right-0 border-b border-r`} />
+        <div style={mono} className="absolute -top-6 left-0 text-[10px] uppercase tracking-[0.2em] text-white/35">
+          Fig. 01 — S² ring / sample view
+        </div>
+        <div style={mono} className="absolute -bottom-6 right-0 text-[10px] tabular-nums tracking-[0.15em] text-white/35">
+          PROBE&nbsp; X {pos.x.toFixed(3)} &nbsp;Y {pos.y.toFixed(3)}
         </div>
       </div>
-    </section>
+    </motion.div>
   );
 }
